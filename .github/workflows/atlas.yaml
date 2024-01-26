@@ -16,10 +16,7 @@ jobs:
     steps:
       - uses: ariga/setup-atlas@v0
       - run: atlas version
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.base_ref }}
       - name: Checkout
         uses: actions/checkout@v4
       - run: atlas migrate hash
-      - run: atlas migrate lint --env ci --git-base ${{ github.base_ref }}
+      - run: atlas migrate lint --env ci --latest 10
