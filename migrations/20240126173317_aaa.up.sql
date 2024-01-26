@@ -1,1 +1,1 @@
-DROP TABLE users2;
+CREATE INDEX users2_name ON users2 (name);
