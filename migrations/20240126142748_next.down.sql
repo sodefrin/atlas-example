@@ -1,1 +1,4 @@
-DROP table user3;
+DROP table users3;
+
+ALTER TABLE users
+DROP COLUMN name;
