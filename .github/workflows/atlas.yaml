@@ -19,4 +19,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - run: atlas migrate hash
+      - run: |
+          status=$(git status --porcelain | cat)
+          if [ -n "$status" ]; then
+            echo "you need to run 'make atlas-hash' and commit the changes"
+            echo "$status"
+            exit 1
+          fi
       - run: atlas migrate lint --env ci --latest 10
+
+  apply:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_USER: test
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+    steps:
+      - uses: ariga/setup-atlas@v0
+      - run: atlas version
+      - name: Checkout
+        uses: actions/checkout@v4
+      - run: atlas migrate hash
+      - run: atlas apply -env ci --to "file://migrations?format=golang-migrate" --auto-approve
