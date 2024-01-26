@@ -3,10 +3,11 @@ diff {
     drop_schema = true
     drop_table  = true
   }
+}
 
+lint {
   concurrent_index {
-    create = true
-    drop   = true
+    error = true
   }
 }
 
