@@ -21,7 +21,5 @@ jobs:
           ref: ${{ github.base_ref }}
       - name: Checkout
         uses: actions/checkout@v4
-      - run: |
-          sudo chown -R root:root $GITHUB_WORKSPACE
       - run: atlas migrate hash
       - run: atlas migrate lint --env ci --git-base ${{ github.base_ref }}
