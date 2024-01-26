@@ -16,4 +16,4 @@ migrate-create:
 
 .PHONY: migrate-up
 migrate-up:
-	migrate -source "file://migrations" -database "postgres://test@test:localhost:5432/test?sslmode=disable" up
+	migrate -source "file://migrations" -database "postgres://test:test@localhost:5432/test?sslmode=disable" up
