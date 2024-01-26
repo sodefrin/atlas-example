@@ -15,5 +15,5 @@ migrate-create:
 	 migrate create -ext .sql -dir migrations $(name)
 
 .PHONY: migrate-up
-migrate-create:
+migrate-up:
 	migrate -source "file://migrations" -database "postgres://test@test:localhost:5432/test?sslmode=disable" up
