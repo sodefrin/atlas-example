@@ -12,10 +12,18 @@ diff {
 
 env "test" {
   migration {
-    dir = "file://migrations?format=golang-migrate" 
+    dir = "file://migrations" 
     format = golang-migrate
   }
 
   dev = "docker://postgres/13/dev?search_path=public"
-  url = "postgres://test:test@localhost:5433/test?sslmode=disable&search_path=public"
+}
+
+env "ci" {
+  migration {
+    dir = "file://migrations" 
+    format = golang-migrate
+  }
+
+  dev = "postgres://test:test@localhost:5432/test?sslmode=disable&search_path=public"
 }
