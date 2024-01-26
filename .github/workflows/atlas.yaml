@@ -19,4 +19,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - run: atlas migrate hash
-      - run: atlas migrate lint --env ci --base ${{ github.base_ref }}
+      - run: atlas migrate lint --env ci --git-base ${{ github.base_ref }}

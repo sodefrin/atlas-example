@@ -12,7 +12,7 @@ diff {
 
 env "test" {
   migration {
-    dir = "file://migrations?format=golang-migrate" 
+    dir = "file://migrations" 
     format = golang-migrate
   }
 
@@ -21,7 +21,7 @@ env "test" {
 
 env "ci" {
   migration {
-    dir = "file://migrations?format=golang-migrate" 
+    dir = "file://migrations" 
     format = golang-migrate
   }
 
