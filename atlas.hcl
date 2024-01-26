@@ -27,5 +27,5 @@ env "ci" {
   }
 
   url = "postgres://dev:dev@localhost:5433/dev?sslmode=disable&search_path=public"
-  dev = "postgres://test:test@localhost:5433/test?sslmode=disable&search_path=public"
+  dev = "postgres://test:test@localhost:5432/test?sslmode=disable&search_path=public"
 }
