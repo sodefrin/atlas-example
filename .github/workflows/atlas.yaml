@@ -1,6 +1,7 @@
 name: Atlas
 on:
   pull_request:
+    types: [labeled, unlabeled, opened, reopened, synchronize]
 jobs:
   lint:
     runs-on: ubuntu-latest
