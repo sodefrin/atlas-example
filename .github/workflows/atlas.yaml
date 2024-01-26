@@ -21,6 +21,7 @@ jobs:
           fi
       - run: |
           count=$(git diff --numstat --name-only origin/${{ github.base_ref }} HEAD -- migrations/atlas.sum | awk '{print $1}')
+          echo $count
           if test $count -gt 1
           then 
             echo "migration conflict detected. please fix it carefully"
