@@ -8,7 +8,7 @@ atlas-lint:
 
 .PHONY: atlas-apply
 atlas-apply:
-	atlas schema apply --env test --to "file://migrations?format=golang-migrate" --auto-approve
+	atlas schema apply --env test --to "file://migrations?format=golang-migrate" --auto-approve --tx-mode none
 
 .PHONY: migrate-create
 migrate-create:
