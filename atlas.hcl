@@ -18,3 +18,12 @@ env "test" {
 
   dev = "docker://postgres/13/dev?search_path=public"
 }
+
+env "ci" {
+  migration {
+    dir = "file://migrations?format=golang-migrate" 
+    format = golang-migrate
+  }
+
+  dev = "postgres://test:test@localhost:5432/test?sslmode=disable&search_path=public"
+}
