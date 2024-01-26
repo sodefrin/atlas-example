@@ -19,6 +19,7 @@ jobs:
       - run: atlas version
       - name: Checkout
         uses: actions/checkout@v4
+      - run: git fetch origin ${{ github.base_ref }} --depth=1
       - run: atlas migrate hash
       - run: |
           status=$(git status --porcelain | cat)
@@ -27,7 +28,7 @@ jobs:
             echo "$status"
             exit 1
           fi
-      - run: atlas migrate lint --env ci --latest 10
+      - run: atlas migrate lint --env ci --git-base ${{ github.base_ref }}
 
   apply:
     runs-on: ubuntu-latest
