@@ -26,5 +26,6 @@ env "ci" {
     format = golang-migrate
   }
 
-  dev = "postgres://test:test@localhost:5432/test?sslmode=disable&search_path=public"
+  url = "postgres://test:test@localhost:5432/test?sslmode=disable&search_path=public"
+  dev = "postgres://dev:dev@localhost:5433/dev?sslmode=disable&search_path=public"
 }
