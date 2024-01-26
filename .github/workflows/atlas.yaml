@@ -1,0 +1,20 @@
+name: Atlas
+on:
+  pull_request:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_USER: test
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+    steps:
+      - uses: ariga/setup-atlas@v0
+      - run: atlas version
+      - run: atlas migrate hash
+      - run: atlas migrate lint --env test --base ${{ github.ref }}
