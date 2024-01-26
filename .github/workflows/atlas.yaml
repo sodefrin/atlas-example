@@ -45,4 +45,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - run: atlas migrate hash
-      - run: atlas apply -env ci --to "file://migrations?format=golang-migrate" --auto-approve
+      - run: atlas schema apply -env ci --to "file://migrations?format=golang-migrate" --auto-approve
