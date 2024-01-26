@@ -1,7 +1,32 @@
 name: Atlas
 on:
   pull_request:
+    types: [labeled, unlabeled, opened, reopened, synchronize]
 jobs:
+  conflict:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ariga/setup-atlas@v0
+      - run: atlas version
+      - name: Checkout
+        uses: actions/checkout@v4
+      - run: git fetch origin ${{ github.base_ref }} --depth=1
+      - run: atlas migrate hash
+      - run: |
+          status=$(git status --porcelain | cat)
+          if [ -n "$status" ]; then
+            echo "you need to run 'make atlas-hash' and commit the changes"
+            echo "$status"
+            exit 1
+          fi
+      - run: |
+          count=$(git diff --numstat HEAD origin/${{ github.base_ref }} -- migrations/atlas.sum | awk '{print $1}')
+          if test $count -gt 1
+          then 
+            echo "migration conflict detected. please fix it carefully"
+            exit 1
+          fi
+
   lint:
     runs-on: ubuntu-latest
     services:
@@ -18,18 +43,11 @@ jobs:
       - run: atlas version
       - name: Checkout
         uses: actions/checkout@v4
-      - run: atlas migrate hash
-      - run: |
-          status=$(git status --porcelain | cat)
-          if [ -n "$status" ]; then
-            echo "you need to run 'make atlas-hash' and commit the changes"
-            echo "$status"
-            exit 1
-          fi
       - run: atlas migrate lint --env ci --latest 10
 
   apply:
     runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'QA')
     services:
       postgres:
         image: postgres
@@ -53,4 +71,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - run: atlas migrate hash
-      - run: atlas schema apply --env ci --to "file://migrations?format=golang-migrate" --auto-approve
+      - run: atlas schema apply --env ci --to "file://migrations?format=golang-migrate" --auto-approve --tx-mode none
