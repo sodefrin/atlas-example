@@ -17,5 +17,4 @@ env "test" {
   }
 
   dev = "docker://postgres/13/dev?search_path=public"
-  url = "postgres://test:test@localhost:5433/test?sslmode=disable&search_path=public"
 }
