@@ -30,6 +30,7 @@ jobs:
 
   apply:
     runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'QA')
     services:
       postgres:
         image: postgres
