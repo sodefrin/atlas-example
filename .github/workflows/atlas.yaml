@@ -16,6 +16,9 @@ jobs:
     steps:
       - uses: ariga/setup-atlas@v0
       - run: atlas version
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
       - name: Checkout
         uses: actions/checkout@v4
       - run: atlas migrate hash
